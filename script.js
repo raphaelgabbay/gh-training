@@ -53,7 +53,7 @@ function draw() {
         Circle.update();
         Circle.display();
     });
-    
+        
     time++; // Time goes on
 }
 
