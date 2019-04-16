@@ -17,19 +17,22 @@ class Props {
 }
 
 function setup() {
-    props = new Props();
-    gui = new dat.GUI();
-    dat.GUI.toggleHide(); // Hide GUI by default
+    if(props === null) {
+        props = new Props();
+        gui = new dat.GUI();
+        dat.GUI.toggleHide(); // Hide GUI by default
 
-    // Add elements to GUI
-    gui.add(props, 'reset');
-    gui.add(props, 'spacing', 0, 100);
-    gui.add(props, 'colorMode');
-    gui.add(props, 'mouseControl');
+        // Add elements to GUI
+        gui.add(props, 'reset');
+        gui.add(props, 'spacing', 0, 100);
+        gui.add(props, 'colorMode');
+        gui.add(props, 'mouseControl');
+    }
 
     // Changing p5 variables
     noStroke();
     colorMode('HSB', 360, 100, 100, 100);
+    angleMode(DEGREES);
 
     // TODO: Initialize all circles
     for (let i = 0; i < 5; i++) {
@@ -42,14 +45,15 @@ function setup() {
 
 function draw() {
     translate(windowWidth/2, windowHeight/2);
-    background(0);
+    rotate(time*5);
+    //background(0);
     
     // Draw && Update all circles
     circlesArray.forEach(Circle => {
         Circle.update();
         Circle.display();
     });
-
+    
     time++; // Time goes on
 }
 
@@ -64,7 +68,8 @@ class Circle {
 
     display() { // Display this circle
         push();
-        fill(this.bright);
+        // fill(this.bright);
+        fill(255,3);
         ellipse(this.x, this.y, this.size);
         pop();
     }
@@ -78,3 +83,7 @@ class Circle {
 function keyPressed() {
     if (key === 'r') setup();
 }
+
+function windowResized(){
+    resizeCanvas(windowWidth, windowHeight);
+  }
